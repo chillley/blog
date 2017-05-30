@@ -1,0 +1,46 @@
+{% extends 'layout.html'%}
+
+{% block main %}
+<ol class="breadcrumb">
+	<li><a href="#">管理首页</a></li>
+	<li><span>内容列表</span></li>
+</ol>
+<h3>内容列表</h3>
+<table class="table table-hover table-striped table-bordered">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>分类名称</th>
+			<th>标题</th>
+			<th>作者</th>
+			<th>添加时间</th>
+			<th>浏览量</th>
+			<th>操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for content in contents %}
+		<tr>
+			<td>{{content._id.toString()}}</td>
+			<td>{{content.category.name}}</td>
+			<td>{{content.title}}</td>
+			<td>{{content.user.username}}</td>
+			<td>{{content.addTime|date('Y年m月d日 H:i:s',-8*60)}}</td>
+			<td>{{content.views}}</td>
+			<td>
+				<a href="/admin/content/edit?id={{content._id.toString()}}">修改</a> | 
+				<a href="/admin/content/delete?id={{content._id.toString()}}">删除</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<nav aria-label="...">
+	<ul class="pager">
+		<li class="previous"><a href="/admin/content?page={{page-1}}"><span aria-hidden="true">&larr;</span>上一页</a></li>
+		<span>当前一共{{pages}}页，一共有{{count}}条数据，每一页显示{{limit}}条数据,当前第{{page}}页</span>
+		<li class="next"><a href="/admin/content?page={{page+1}}">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+	</ul>
+
+</nav>
+{% endblock %}

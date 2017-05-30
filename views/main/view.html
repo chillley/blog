@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>冰寒博客论坛</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="个人博客,冰寒个人博客,个人博客模板,夏磊">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <!-- 引入 Bootstrap -->
+    <link rel="icon" href="../../public/img/touxiang.jpg" type="image/x-icon"/>
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+
+    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+    <!--[if lt IE 9]>
+    <!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>-->
+    <!--<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>-->
+    <!--[endif]-->
+</head>
+<body>
+
+
+<!--导航-->
+<div class="navbar navbar-default navbar-fixed-top move-me ">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+                <img src="../../public/img/149582171474930b.png" class="navbar-brand-logo " alt=""/>
+
+            </a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav  navbar-right">
+                {% for category in category %}
+                <li>
+                    <a href="/?category={{category.id}}">{{category.name}}
+                    </a>
+                <li>
+                    {% endfor %}
+                    <a href="/aboutme">Aboutme
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<!--banner部分-->
+<div id="home">
+    <div class="overlay">
+        <div class="container">
+            <div class="row ">
+                <div class="col-lg-9 col-md-9 head-text">
+                    <div class="portrait">
+                        <img src="../../public/img/touxiang.jpg" alt="">
+                        <div><p>冰寒</p></div>
+                    </div>
+                        <span>
+                          冰寒：一个走在前端之路的程序猿
+                        </span>
+                        <span>
+                           座右铭：当你热衷某件事的时候，天上的神明与星辰，人间的艺术和真纯，我们所敬畏和热爱的，莫过于此。
+                        </span>
+                </div>
+
+                {% if userInfo.id%}
+                <div class="col-lg-3 col-md-3" id="message">
+                    <div class="div-trans text-center">
+                        <h3>用户信息</h3>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            {% if userInfo.isAdmin %}
+                            <div class="form-group">
+                                欢迎<p>管理员登录，<a href="/admin">可以进去后台系统</a></p>
+                            </div>
+                            {% else %}
+                            <div class="form-group">
+                                欢迎<p>{{userInfo.username}}</p>登录本网站
+                            </div>
+                            {% endif %}
+                            <div class="form-group" style="color: #00b3ee;">
+                                现在您可以查看并且评论文章了
+                            </div>
+                            <div class="form-group">
+                                <a href="#" id="loadout">退出</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="col-lg-3 col-md-3" id="loaded">
+                    <div class="div-trans text-center">
+                        <h3>登陆</h3>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="username" required="required"
+                                       placeholder="用户名">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="password" required="required"
+                                       placeholder="密码">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-block btn-lg">点击登录</button>
+                            </div>
+                            <div class="form-group">
+                                <span>还没有注册？</span><a href="javascript:;" id="login">前往注册</a>
+                            </div>
+                            <div class="form-group">
+                                <span class="colwarning"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3" id="logined" style="display: none">
+                    <div class="div-trans text-center">
+                        <h3>注册页面</h3>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control" required="required" name="username"
+                                       placeholder="请输入用户名">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" required="required" name="password"
+                                       placeholder="请输入密码">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" required="required" name="repassword"
+                                       placeholder="请再次输入密码">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-block btn-lg">点击注册</button>
+                            </div>
+                            <div class="form-group">
+                                 <a href="javascript:;" id="back-load">返回登录</a>
+                            </div>
+                            <div class="form-group" style="margin-top: -18px">
+                                <span id="reg" class="colwarning"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif%}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--博客内容部分页面展示 -->
+<div class="content" style="width: 100%;background: #f6f6f6">
+    <div class="container">
+        <div class="page-header">
+            <h3>首页
+                <small class="text-warning">关于我们所分享的最新文章</small>
+            </h3>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="thumbnail">
+                            <!--<img class="img-responsive img-thumbnail" src="../../public/img/touxiang.jpg" alt="...">-->
+                            <div class="caption">
+                                {% for cate in category %}
+                                {% if content.category==cate.id%}
+                                <span><a href="/?category={{cate.id}}"><i class="fa fa-book"></i>&nbsp;{{cate.name}}</a></span>
+                                {% endif %}
+                                {% endfor %}
+                                {% for author in User %}
+                                {% if author.id == content.user %}
+                                <span><i class="fa fa-user-circle"></i> {{author.username}}</span>
+                                {% endif %}
+                                {% endfor %}
+                                <span><i class="fa fa-calendar-check-o"></i> {{content.addTime|date('Y年m月d日 H:i:s',-8*60)}}</span>
+                                <h3 style="text-align: center;margin-bottom: 20px">{{content.title}}</h3>
+                                <p id="markcontent">{{content.content}}</p>
+                                <p><span><i
+                                        class="fa fa-eye"></i> {{content.views}}</span><span><i
+                                        class="fa fa-commenting"></i> {{content.comments.length}}评论</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% if userInfo.id%}
+                    <div class="col-sm-12 col-md-12" style="background-color: #ffffff;">
+                        <form>
+                            <div class="form-group">
+                              <span>评论专区</span>
+                                <span class="pull-right">一共 <em id="messageLength"></em> 条评论</span>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" id="contentId" value="{{content.id}}">
+                        <textarea id="messagecontent" class="col-sm-12 col-md-12" style="color: rgb(51, 51, 51);height: 100px"  placeholder="请输入评论内容">
+
+                        </textarea>
+                      <button id="messagebtn" type="button" class="btn btn-success pull-right" style="margin: 20px 0 20px 0">发布评论</button>
+                            </div>
+                        </form>
+                    </div>
+                    {%else%}
+                    <div class="col-sm-12 col-md-12" style="background-color: #ffffff;">
+                       <p style="text-align: center;margin: 10px">您还没有登录请登陆后查看评论并参与评论</p>
+                    </div>
+                    {% endif %}
+                    <div class="col-sm-12 col-md-12" style="background-color:#fbfbfb">
+
+                        <div id="messageList" class="col-sm-12 col-md-12" style="border-bottom: 1px solid #CCCCCC;padding: 0">
+
+                        </div>
+                        <nav id="pagemore" aria-label="..." style="position: relative;top: 20px;">
+                            <ul id="paging" class="pager" style="padding: 10px;">
+                                <li id="up" class="previous up pull-left"><a href="javascript:;"><span aria-hidden="true"></span>上一页</a></li>
+                                <li id="Displaydigit" style="margin: 0 auto"></li>
+                                <li id="down" class="previous down pull-right"><a href="javascript:;"><span aria-hidden="true"></span>下一页</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="col-xs-12   col-md-12" style="background: #fbfbfb;padding-bottom: 10px">
+                    <div class="nav-list">
+                        <div>
+                            <p>文章分类专区</p>
+                        </div>
+                        <ul id="nav-list">
+                            {% if cate == ''%}
+                            <li><a href="/">全部文章</a></li>
+                            {% else %}
+                            <li><a href="/">全部文章</a></li>
+                            {% endif %}
+
+                            {% for category in category %}
+                            {% if cate == category.id %}
+                            <li  class="focus"><a  href="/?category={{category.id}}">{{category.name}}</a></li>
+                            {% else %}
+                            <li><a href="/?category={{category.id}}">{{category.name}}</a></li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-12   col-md-12" style="background: #fbfbfb;">
+                    <div class="nav-list">
+                        <div>
+                            <p>热门文章推荐</p>
+                        </div>
+                        <div class="list-group">
+                            {% for list in list %}
+                            <a href="/view?contentid={{list.id}}" class="list-group-item">
+                                <h6 class="list-group-item-heading">{{list.title}}</h6>
+                                <p class="list-group-item-text" style="overflow:hidden; text-overflow:ellipsis;white-space:nowrap;">{{list.description}}</p>
+                                <span><i class="fa fa-eye"></i>{{list.views}}</span><span style="padding-left: 20px"><i
+                                    class="fa fa-calendar-check-o"></i> {{list.addTime|date('Y年m月d日 H:i:s',-8*60)}}</span>
+                            </a>
+                            {% endfor%}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12   col-md-12" style="background: #fbfbfb;padding-bottom: 10px">
+                    <!--<div class="nav-list">-->
+                        <!--<div>-->
+                            <!--<p>联系我</p>-->
+                        <!--</div>-->
+                        <!--<div class="media">-->
+                            <!--<div class="media-left">-->
+                                <!--<a href="#" >-->
+                                    <!--<img  style="width: 120px;" class="media-object" src="../../public/img/touxiang.jpg" alt="...">-->
+                                <!--</a>-->
+                            <!--</div>-->
+                            <!--<div class="media-body">-->
+                                <!--<h5 class="media-heading">姓名：夏磊</h5>-->
+                                <!--<h5 class="media-heading">网名：寒冰</h5>-->
+                                <!--<h5 class="media-heading">职业：前端程序员，web程序员</h5>-->
+                                <!--<h5>个人网站主页：www.xxx.com</h5>-->
+                                <!--<h5 class="media-heading">爱好：跑步，程序</h5>-->
+                                <!--<h5 class="media-heading">个人QQ：457849840</h5>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div style="float: left">-->
+                            <!--QQ二维码：<img  style="width: 120px;" class="media-object" src="../../public/img/touxiang.jpg" alt="...">-->
+                        <!--</div>-->
+                        <!--<div style="float: left;margin-left: 40px">-->
+                            <!--QQ二维码：<img  style="width: 120px;" class="media-object" src="../../public/img/touxiang.jpg" alt="...">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--底部-->
+<footer class="container-fluid " style="height: 50px;background: black">
+    <div class="container footer">
+      <p><span>本站使用的阿里云服务器</span> | <span>Design by：夏磊</span></p>
+    </div>
+</footer>
+<div class="back-top"></div>
+<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+
+
+<!--<script src="../Jquery/jquery-1.8.3.min.js"></script>-->
+<!-- 包括所有已编译的插件 -->
+<script src="/public/js/jquery-1.10.2.js"></script>
+<script src="/public/js/bootstrap.js"></script>
+<!--<script src="../js/jquery-1.8.3.min.js"></script>-->
+
+</body>
+<script src="/public/js/index.js">
+</script>
+<script src="/public/js/comment.js"></script>
+</html>
